@@ -8,7 +8,7 @@ class F30KCaptionKarpathyDataset(BaseDataset):
         if split == "train":
             names = ["f30k_caption_karpathy_train", "f30k_caption_karpathy_val"]
         elif split == "val":
-            names = ["f30k_caption_karpathy_test"]
+            names = ["f30k_caption_karpathy_val"]
         elif split == "test":
             names = ["f30k_caption_karpathy_test"]
 

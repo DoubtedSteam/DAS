@@ -12,7 +12,7 @@ class NLVR2Dataset(BaseDataset):
             names = ["nlvr2_train"]
         elif split == "val":
             # names = ["nlvr2_dev", "nlvr2_test1"]
-            names = ["nlvr2_dev"]
+            names = ["nlvr2_train"]
         elif split == "test":
             names = ["nlvr2_dev", "nlvr2_test1"]
 
