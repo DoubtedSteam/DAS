@@ -103,7 +103,7 @@ We also evaluate the experiment results on SceinceQA following [LaVIN](https://g
 
 #### Experiments results
 
-<p>Table B: Comparison of DAS and PETL methods on ScienceQA for LLaMA.</p>
+<p>Table 1: Comparison of DAS and PETL methods on ScienceQA for LLaMA.</p>
 <table>
 <thead>
 <tr>
@@ -178,6 +178,10 @@ We also evaluate the experiment results on SceinceQA following [LaVIN](https://g
 <td>90.24</td>
 </tr>
 </tbody></table>
+
+#### Code
+
+Comming Soon
 
 ## Acknowledgements
 
