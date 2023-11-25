@@ -1,13 +1,29 @@
-# METER: A Multimodal End-to-end TransformER Framework
+This repository contains the implementation of the NeurIPS 2023 paper:
+> **Parameter and Computation Efficient Transfer Learning for Vision-Language Pre-trained Models** 
+> [[Paper]](https://arxiv.org/abs/2309.01479) <br>
+> [Qiong Wu](https://scholar.google.com/citations?hl=en&user=HyKLYKYAAAAJ)<sup>12</sup>,  Wei Yu<sup>12</sup>, Yiyi Zhou<sup>12</sup>, Shubin Huang<sup>1</sup>, [Xiaoshuai Sun](https://sites.google.com/view/xssun)<sup>12</sup>, [Rongrong Ji](https://mac.xmu.edu.cn/rrji/)<sup>12</sup>
+><sup>1</sup>Media Analytics and Computing Lab, Department of Artificial Intelligence, School of Informatics, Xiamen University  
+> <sup>2</sup>Institute of Artificial Intelligence, Xiamen University 
 
-## Install
+In this paper, we aim at parameter and computation efficient transfer learning (PCETL) for VLP models. In particular, PCETL not only needs to limit the number of trainable parameters in VLP models, but also to reduce the computational redundancy during inference, thus enabling a more efficient transfer. To approach this target, we propose a novel dynamic architecture skipping (DAS) approach towards effective PCETL. DAS first observes the significances of their modules to downstream tasks via a reinforcement learning (RL) based process, and then skips the redundant ones with lightweight networks, i.e., adapters, according to the obtained rewards.
+
+---
+
+<div  align="center">    
+<img src="./framework.png" width="95%">
+</div>
+
+---
+
+## Setup
+### Install
 
 ```bash
 pip install -r requirements.txt
 pip install -e .
 ```
 
-## Dataset Preparation
+### Dataset Preparation
 
 We follow [ViLT](https://github.com/dandelin/ViLT) and use `pyarrow` to serialize the datasets. See [this link](https://github.com/dandelin/ViLT/blob/master/DATA.md) for details.
 
