@@ -16,16 +16,80 @@ In this paper, we aim at parameter and computation efficient transfer learning (
 ---
 
 ## Setup
-### Install
+### Install for ViLT and METER
 
 ```bash
 pip install -r requirements.txt
 pip install -e .
 ```
 
-### Dataset Preparation
+### Dataset Preparation for ViLT and METER
 
 We follow [ViLT](https://github.com/dandelin/ViLT) and use `pyarrow` to serialize the datasets. See [this link](https://github.com/dandelin/ViLT/blob/master/DATA.md) for details.
+
+
+### Install for LaVIN
+
+```bash
+cd LaVIN-DAS
+conda create -n lavin python=3.8 -y
+conda activate lavin
+
+# install pytorch
+conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 -c pytorch
+
+# install dependency and lavin
+pip install -r requirements.txt
+pip install -e .
+```
+
+### Preparation for LaVIN
+
+Obtain the weights of LLaMA from [this form](https://forms.gle/jk851eBVbX1m5TAv5)  (official) or Download [LLaMA-7B](https://huggingface.co/nyanko7/LLaMA-7B/tree/main)
+
+For ScienceQA, please prepare the dataset from the [official repo](https://github.com/lupantech/ScienceQA).
+
+For BoolQ, CommonSenseQA and gsm8k, please run:
+
+```bash
+pip install datasets
+python OrgBoolQ.py
+python OrgCommonSenseQA.py
+python OrgGSM8K.py
+```
+
+The file structure should look like:
+
+
+```bash
+LaVIN-DAS/
+  |-- das
+  |-- scripts
+  |-- train.py
+  |-- eval.py
+  ......
+data/
+  |-- problem.json
+  |-- pid_splits.json
+  |-- captions.json
+  |-- all_data.json
+  |-- images
+      |-- train          # ScienceQA train image
+      |-- val            # ScienceQA val image
+      |-- test           # ScienceQA test image
+  |-- weights
+      |-- tokenizer.model
+          |--7B
+              |-- params.json
+              |-- consolidated.00.pth
+          ......
+  |-- BoolQ
+      |-- boolq_0_shot_test.json
+  |-- GSM8K
+      |-- gsm8k_0_shot_test.json
+  |-- CommonSenseQA
+      |-- commonsense_qa_0_shot_test.json
+```
 
 ## Fine-tuning on Downstream Tasks
 
@@ -196,9 +260,19 @@ We also evaluate the experiment results on SceinceQA following [LaVIN](https://g
 </tr>
 </tbody></table>
 
-#### Code
+#### LLaMA Based Tasks
 
-Comming Soon
+To search and finetuning the LLaMA based tasks, run:
+
+```bash
+cd LaVIN-DAS
+sh scripts/{task_type}_{benchmark}_7b.sh
+```
+
+The task_type includes evaluate, finetuning and search.
+
+The benchmark includes boolq (BoolQ), csqa (CommonSenceQA), gsm8k (GSM8K) and sqa (ScienceQA).
+
 
 ## Acknowledgements
 
