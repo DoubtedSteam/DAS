@@ -1,0 +1,22 @@
+CUDA_VISIBLE_DEVICES=6,7 torchrun --nproc_per_node 2 --master_port 11117 train_llama.py \
+    --llm_model 7B\
+    --llama_model_path /data/consolidated/ \
+    --data_path ../data/alpaca_data.json \
+    --max_seq_len 512 \
+    --batch_size 4 \
+    --accum_iter 4 \
+    --epochs 10 \
+    --warmup_epochs 4 \
+    --blr 9e-3 \
+    --weight_decay 0.02 \
+    --output_dir /data/LaVIN/LaVIN-DAS4 \
+    --adapter_type attn \
+    --adapter_dim 8 \
+    --adapter_scale 1\
+    --n_prompt 6 \
+    --prompt_format QCM-ALE \
+    --temperature 10.\
+    --visual_adapter_type router \
+    --skipped_num 6 \
+    --search_mode
+
