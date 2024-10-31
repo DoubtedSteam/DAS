@@ -67,7 +67,7 @@ def forward_llama(
             residual = hidden_states
             
             hidden_states = self.input_layernorm(hidden_states)
-            adapter_states = self.adapter_adapt(hidden_states).type_as(residual)
+            adapter_states = self.adapter_adapt_0(hidden_states).type_as(residual)
             
             hidden_states, self_attn_weights, present_key_value = self.self_attn(
                 hidden_states=adapter_states,
@@ -82,7 +82,8 @@ def forward_llama(
             # Fully Connected
             residual = hidden_states
             hidden_states = self.post_attention_layernorm(hidden_states)
-            hidden_states = self.mlp(hidden_states)
+            adapter_states = self.adapter_adapt_1(hidden_states).type_as(residual)
+            hidden_states = self.mlp(adapter_states)
             hidden_states = residual + hidden_states
         else:
             residual = hidden_states
@@ -112,7 +113,8 @@ def set_Adapter(model, dim_adapt, dim_replace):
     for _ in model.children():
         if type(_) == llava.model.language_model.modeling_llama.LlamaDecoderLayer:
             _.dim = 4096
-            _.adapter_adapt = Adapter(_.dim, hidden_dim=dim_adapt)
+            _.adapter_adapt_0 = Adapter(_.dim, hidden_dim=dim_adapt // 2)
+            _.adapter_adapt_1 = Adapter(_.dim, hidden_dim=dim_adapt // 2)
             _.adapter_replace = Adapter(_.dim, hidden_dim=dim_replace)
             _.skipped_flag = -1.
             
