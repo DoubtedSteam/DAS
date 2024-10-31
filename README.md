@@ -15,20 +15,56 @@ In this paper, we aim at parameter and computation efficient transfer learning (
 
 ---
 
+## Release:
+
+[24/10/27] Support for LLaVA is released.
+
 ## Setup
-### Install for ViLT and METER
+
+### LLaVA
+#### Install for LLaVA
+
+```
+cd LLaVA-DAS
+conda create -n llava python=3.10 -y
+conda activate llava
+pip install --upgrade pip  # enable PEP 660 support
+pip install -e .
+
+pip install -e ".[train]"
+pip install flash-attn --no-build-isolation
+```
+
+#### Preparation for LLaVA
+
+The json files can be found at:
+```
+./LLaVA-DAS/json_data
+```
+
+The images can be downloaded from:
+```
+Slake:
+https://www.med-vqa.com/slake/
+
+AID:
+https://captain-whu.github.io/AID/
+```
+
+### ViLT and METER
+#### Install for ViLT and METER
 
 ```bash
 pip install -r requirements.txt
 pip install -e .
 ```
 
-### Dataset Preparation for ViLT and METER
+#### Dataset Preparation for ViLT and METER
 
 We follow [ViLT](https://github.com/dandelin/ViLT) and use `pyarrow` to serialize the datasets. See [this link](https://github.com/dandelin/ViLT/blob/master/DATA.md) for details.
 
-
-### Install for LaVIN
+### LaVIN and LLaMA
+#### Install for LaVIN and LLaMA
 
 ```bash
 cd LaVIN-DAS
@@ -43,7 +79,7 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### Preparation for LaVIN
+#### Preparation for LaVIN and LLaMA
 
 Obtain the weights of LLaMA from [this form](https://forms.gle/jk851eBVbX1m5TAv5)  (official) or Download [LLaMA-7B](https://huggingface.co/nyanko7/LLaMA-7B/tree/main)
 
@@ -92,6 +128,41 @@ data/
 ```
 
 ## Fine-tuning on Downstream Tasks
+
+### LLaVA
+
+To search and finetuning the LLaVA, run:
+
+```bash
+cd LLaVA-DAS
+sh scripts/{task_type}_DAS_{benchmark}.sh
+```
+
+The task_type includes {search} and {finetune}.
+
+The benchmark includes {aid20} (AID), {aid50} (AID) and {slake} (Slake).
+
+For evaluating, run:
+```bash
+sh scripts/v1_5/eval/{benchmark}.sh
+```
+
+*Notification:* The searched structure will be printed in the shell and needs to be manually filled in the following locations:
+
+```
+Finetuning: llava/train/train.py line 1011
+Evaluating: llava/model/builder.py line 196
+```
+
+#### Evaluate
+
+Add the path of checkpoint and 'skip_module' to vqa_eval.sh.
+
+```bash
+sh script/vqa_eval.sh
+```
+
+### ViLT and METER
 
 Work on the METER:
 
@@ -177,6 +248,8 @@ Add the path of checkpoint and 'skip_module' to nlvr_eval.sh.
 sh script/nlvr_eval.sh
 ```
 
+### LaVIN and LLaMA
+
 ### ScienceQA
 
 We also evaluate the experiment results on SceinceQA following [LaVIN](https://github.com/luogen1996/LaVIN/tree/main)
@@ -260,19 +333,18 @@ We also evaluate the experiment results on SceinceQA following [LaVIN](https://g
 </tr>
 </tbody></table>
 
-#### LLaMA Based Tasks
+### NLP Tasks
 
-To search and finetuning the LLaMA based tasks, run:
+To search and finetuning the LLaMA, run:
 
 ```bash
 cd LaVIN-DAS
 sh scripts/{task_type}_{benchmark}_7b.sh
 ```
 
-The task_type includes evaluate, finetuning and search.
+The task_type includes {search}, {finetune} and {evaluate}.
 
-The benchmark includes boolq (BoolQ), csqa (CommonSenceQA), gsm8k (GSM8K) and sqa (ScienceQA).
-
+The benchmark includes {boolq} (BoolQ), {csqa} (CommonSenceQA), {gsm8k} (GSM8K).
 
 ## Acknowledgements
 
