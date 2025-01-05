@@ -188,7 +188,7 @@ def load_pretrained_model(model_path, model_base, model_name, load_8bit=False, l
                 print(state_path)
                 state_dict = torch.load(os.path.join(model_path, state_path))
                 for key in state_dict.keys():
-                    if 'adapter' in key or 'post_attention_layernorm' in key:
+                    if 'adapter' in key or 'post_attention_layernorm' in key or 'mm_projector' in key:
                         new_state_dict[key] = state_dict[key]
                         print(key)
         model.load_state_dict(new_state_dict, strict=False)
