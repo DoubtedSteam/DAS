@@ -384,7 +384,7 @@ class LLaVATrainer(Trainer):
         else:
             labels = None
             
-        outputs = model(**inputs)
+        # outputs = model(**inputs)
         
         def clean_flag(model):
             for layer in model.model.layers:
