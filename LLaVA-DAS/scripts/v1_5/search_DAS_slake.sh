@@ -4,7 +4,7 @@ export CUDA_VISIBLE_DEVICES=4,5,6,7
 torchrun --nproc_per_node 4 --master_port 11122 \
     llava/train/train_mem.py \
     --dim_adapt 128 \
-    --dim_replace 128 \
+    --dim_replace 256 \
     --mm_projector_lr 2e-5 \
     --deepspeed ./scripts/zero2.json \
     --model_name_or_path liuhaotian/llava-v1.5-7b \
